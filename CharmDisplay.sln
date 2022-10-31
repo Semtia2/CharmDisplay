@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32901.215F
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CharmDisplay", "CharmDisplay.csproj", "{DB7621B2-B0EA-4485-8FC3-9271AC488303}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DB7621B2-B0EA-4485-8FC3-9271AC488303}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB7621B2-B0EA-4485-8FC3-9271AC488303}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB7621B2-B0EA-4485-8FC3-9271AC488303}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB7621B2-B0EA-4485-8FC3-9271AC488303}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F54423AD-40A7-4CD4-9F51-AB305A29E2C7}
+	EndGlobalSection
+EndGlobal
