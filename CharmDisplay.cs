@@ -17,7 +17,6 @@ namespace CharmDisplay
     public class CharmDisplay : Mod
     {
         private static readonly TextureLoader _charmSpriteLoader = new(typeof(CharmDisplay).Assembly, "CharmDisplay.Resources");
-        private int totalCharms = 40;
 
         List<List<Sprite>> charmSprites = new();
 
@@ -84,7 +83,7 @@ namespace CharmDisplay
         {
             orig(self);
 
-            // UpdateCanvas(); // Causes save file to not load since charmSprites don't exist yet
+            // UpdateCanvas(); // Causes save file to not load since the equippedCharms doesn't exist yet
         }
 
         private void UpdateCanvas()
@@ -94,7 +93,7 @@ namespace CharmDisplay
 
             foreach (int charm in equippedCharms)
             {
-                charmPanel.Children.Add(new Image(layout, CharmIconList.Instance.spriteList[charm])
+                charmPanel.Children.Add(new Image(layout, CharmIconList.Instance.GetSprite(charm))
                 {
                     Height = spriteSize,
                     Width = spriteSize,
@@ -107,6 +106,6 @@ namespace CharmDisplay
             charmPanel.Children.Clear();
         }
 
-        public override string GetVersion() => "1.1.19";
+        public override string GetVersion() => "1.1.20";
     }
 }
