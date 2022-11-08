@@ -8,11 +8,11 @@
     <!--<DocumentationFile>$(OutputPath)/$(AssemblyTitle).xml</DocumentationFile>-->
   </PropertyGroup>
   <PropertyGroup>
-    <RootNamespace>Charm_Display</RootNamespace>
-    <AssemblyName>Charm_Display</AssemblyName>
+    <RootNamespace>CharmDisplay</RootNamespace>
+    <AssemblyName>CharmDisplay</AssemblyName>
     <TargetFramework>net472</TargetFramework>
-    <AssemblyTitle>Charm_Display</AssemblyTitle>
-    <Product>Charm_Display</Product>
+    <AssemblyTitle>CharmDisplay</AssemblyTitle>
+    <Product>CharmDisplay</Product>
     <Description>A Hollow Knight Mod</Description>
     <Copyright>Copyright ©  2022</Copyright>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
@@ -323,9 +323,6 @@
     <Reference Include="UnityEngine.XRModule">
       <HintPath>$(HollowKnightRefs)/UnityEngine.XRModule.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="Resources\**\*.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\**\*.png" />

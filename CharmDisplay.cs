@@ -28,38 +28,24 @@ namespace CharmDisplay
         private LayoutRoot layout;
         private StackLayout charmPanel;
         List<int> equippedCharms;
-        int paddingLeft = 175;
-        int paddingTop = 245;
-        int spacing = 45;
+        int paddingLeft = 160;
+        int paddingTop = 230;
+        int spacing = 6;
+        int spriteSize = 50;
 
-        private bool debugBoundStatePersistent = true;
+        private bool debugBoundStatePersistent = false;
 
         public override void Initialize(Dictionary<string, Dictionary<string, GameObject>> preloadedObjects)
         {
             Log("Initializing");
 
             Instance = this;
-            for (int charmNum = 0; charmNum < totalCharms; charmNum++)
-            {
-                Log($"\"{charmNum + 1}.png\"");
-                List<Sprite> emptyList = new List<Sprite>();
-                charmSprites.Add(emptyList);
-                charmSprites[charmNum].Add(_charmSpriteLoader.GetTexture($"Resources.{charmNum + 1}.png").ToSprite());
-
-                if (charmNum == 22 || charmNum == 23 || charmNum == 25)
-                {
-                    charmSprites[charmNum].Add(_charmSpriteLoader.GetTexture($"{charmNum + 1}_G.png").ToSprite());
-                }
-                else if (charmNum == 36)
-                {
-                    charmSprites[charmNum].Add(_charmSpriteLoader.GetTexture($"{charmNum + 1}_L.png").ToSprite());
-                    charmSprites[charmNum].Add(_charmSpriteLoader.GetTexture($"{charmNum + 1}_R.png").ToSprite());
-                    charmSprites[charmNum].Add(_charmSpriteLoader.GetTexture($"{charmNum + 1}_Void.png").ToSprite());
-                }
-            }
 
             SetupCanvas();
-            ModHooks.CharmUpdateHook += UpdateCanvas;
+            //ModHooks.CharmUpdateHook += UpdateCanvas;
+            On.UIManager.UIClosePauseMenu += OnUnpause;
+            On.UIManager.GoToPauseMenu += OnPause;
+            On.UIManager.ContinueGame += OnGameContinue;
 
             Log("Initialized");
         }
@@ -75,37 +61,52 @@ namespace CharmDisplay
             {
                 HorizontalAlignment = HorizontalAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Top,
-                Spacing = 5,
-                Padding = new Padding(paddingLeft, paddingTop, 0, 0),
-                Orientation = Orientation.Horizontal,
-            };
-        }
-
-        private void UpdateCanvas(PlayerData data, HeroController controller)
-        {
-            charmPanel.Destroy();
-            charmPanel = new(layout, "Charm Panel")
-            {
-                HorizontalAlignment = HorizontalAlignment.Left,
-                VerticalAlignment = VerticalAlignment.Top,
                 Spacing = spacing,
                 Padding = new Padding(paddingLeft, paddingTop, 0, 0),
                 Orientation = Orientation.Horizontal,
             };
-            equippedCharms = data.equippedCharms;
+        }
+
+        private void OnUnpause(On.UIManager.orig_UIClosePauseMenu origUIClosePauseMenu, UIManager self)
+        {
+            origUIClosePauseMenu(self);
+            UpdateCanvas();
+        }
+
+        private IEnumerator OnPause(On.UIManager.orig_GoToPauseMenu orig, UIManager uiManager)
+        {
+            yield return orig(uiManager);
+
+            HideCanvas();
+        }
+
+        private void OnGameContinue(On.UIManager.orig_ContinueGame orig, UIManager self)
+        {
+            orig(self);
+
+            // UpdateCanvas(); // Causes save file to not load since charmSprites don't exist yet
+        }
+
+        private void UpdateCanvas()
+        {
+            charmPanel.Children.Clear();
+            equippedCharms = PlayerData.instance.equippedCharms;
 
             foreach (int charm in equippedCharms)
             {
-                charmPanel.Children.Add(new Image(layout, charmSprites[charm - 1].First()));
-               /* charmPanel.Children.Add(new TextObject(layout)
+                charmPanel.Children.Add(new Image(layout, CharmIconList.Instance.spriteList[charm])
                 {
-                    Text = charm.ToString(),
-                    FontSize = 23,
-                    Padding = new Padding(0, 0)
-                });*/
+                    Height = spriteSize,
+                    Width = spriteSize,
+                });
             }
         }
 
-        public override string GetVersion() => "1.1.0";
+        private void HideCanvas()
+        {
+            charmPanel.Children.Clear();
+        }
+
+        public override string GetVersion() => "1.1.19";
     }
 }
